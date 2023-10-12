@@ -62,10 +62,12 @@ public class PostView {
             if (signupOption == "yes"){
                 String username = getValidStringInput("Please enter a username: ");
                 String password = getValidStringInput("Please enter a password: ");
+                String firstname = getValidStringInput("Please enter a FirstName: ");
+                String lastname = getValidStringInput("Please enter a LastName: ");
                 boolean signupSuccess = false;
                 while (!signupSuccess){
                     try {
-                        this.account = this.accountManager.signup(username, password);
+                        this.account = this.accountManager.signup(firstname, lastname, username, password);
                         signupSuccess = true;
                     } catch (AccountException e) {
                         throw new RuntimeException(e);

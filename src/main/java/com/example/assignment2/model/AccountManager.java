@@ -10,13 +10,13 @@ public class AccountManager {
         this.accounts = new Account[10];
     }
 
-      public Account createDefaultAccount(String username, String password, int numPost) {
-        this.accounts[AccountManager.arrayCount++] = new DefaultAccount(username, password, numPost);
+      public Account createDefaultAccount(String username, String password, String firstname, String lastname, int numPost) {
+        this.accounts[AccountManager.arrayCount++] = new DefaultAccount(username, password, firstname, lastname, numPost);
         return this.accounts[AccountManager.arrayCount - 1];
     }
 
-    public Account createPremiumAccount(String username, String password, String securityQuestion) {
-        this.accounts[AccountManager.arrayCount++] = new PremiumAccount( username, password, securityQuestion);
+    public Account createPremiumAccount(String username, String password, String firstname, String lastname, String securityQuestion) {
+        this.accounts[AccountManager.arrayCount++] = new PremiumAccount( username, password, firstname, lastname, securityQuestion);
         return this.accounts[AccountManager.arrayCount - 1];
     }
 
@@ -37,9 +37,9 @@ public class AccountManager {
             while ((accountLine = accountReader.readLine()) != null) {
                 String[] arrayOfLine = accountLine.split(",");
                 if (arrayOfLine[0].equals("default")) {
-                    createDefaultAccount(arrayOfLine[1], arrayOfLine[2], Integer.parseInt(arrayOfLine[3]));
+                    createDefaultAccount(arrayOfLine[1], arrayOfLine[2], arrayOfLine[3], arrayOfLine[4], Integer.parseInt(arrayOfLine[5]));
                 } else if (arrayOfLine[0].equals("premium")) {
-                    createPremiumAccount(arrayOfLine[1], arrayOfLine[2], arrayOfLine[3]);
+                    createPremiumAccount(arrayOfLine[1], arrayOfLine[2], arrayOfLine[3], arrayOfLine[4], arrayOfLine[5]);
                 }
 
             }
@@ -103,12 +103,17 @@ public class AccountManager {
         // Successful login, return the account
         return foundAccount;
     }
-    public Account signup(String username, String password) throws AccountException {
+    public Account signup(String firstname, String lastname, String username, String password) throws AccountException {
         // Check if the username already exists
         for (int i = 0; i < AccountManager.arrayCount; i++) {
             if (accounts[i] != null && accounts[i].getUsername().equals(username)) {
                 throw new AccountException("Username already exists. Please choose a different username.");
             }
+        }
+
+        // Ensure that all fields are not empty
+        if (firstname.isEmpty() || lastname.isEmpty() || username.isEmpty() || password.isEmpty()) {
+            throw new AccountException("All fields (firstname, lastname, username, and password) are required.");
         }
 
         // Prompt the user to confirm the password
@@ -128,7 +133,7 @@ public class AccountManager {
         }
 
         // Create a new default account
-        DefaultAccount newAccount = new DefaultAccount(username, enteredPassword, 0); // Initialize with 0 posts
+        DefaultAccount newAccount = new DefaultAccount(username, enteredPassword, firstname, lastname, 0); // Initialize with 0 posts
         accounts[AccountManager.arrayCount++] = newAccount;
         return newAccount;
     }

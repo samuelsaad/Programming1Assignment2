@@ -21,8 +21,8 @@ public class PremiumAccount extends Account implements DetailPrintable {
     // it may be replaced with "replacement", however this would be too generic as to what it does.
     private static final String passwordReplacement = "asx101";
 
-    PremiumAccount(String username, String password, String securityQuestion) {
-        super(username, password);
+    PremiumAccount(String username, String password, String firstname, String lastname, String securityQuestion) {
+        super(username, password, firstname, lastname);
         this.securityQuestion = securityQuestion;
     }
 

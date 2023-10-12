@@ -2,17 +2,20 @@ package com.example.assignment2.model;
 
 
 public abstract class Account {
-
+    private String firstname;
     private String username;
     public String password;
+    private String lastname;
 
 
 
     // Here is the constructor, the variables being passed here have the same names declared as the object member variables
     // it is no modifier due to it only being used in the account structure which is in the same package.
-    Account(String username, String password) {
+    Account(String username, String password, String firstname, String lastname) {
         this.username = username;
         this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 
     public String getPassword() {
@@ -22,6 +25,13 @@ public abstract class Account {
         return this.username;
     }
 
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
 
     // Here is the mandatory no modifier method that will return the account type. This will be used in order to write the account type to the file
     // in order for the object reconstruction methods to know what instance this object is. This method may be renamed to getType,
@@ -38,7 +48,7 @@ public abstract class Account {
     // Again Here the return type may be of type String Array or Char Array but this would not be necessary as accessing and specifying
     // different indexes is not needed for the use of this method.
     String getDetails() {
-        return "Type of Account : " + this.getAccountType() + "\n\t Username : " + this.username;
+        return  "First Name : " + this.firstname + "\n\t Last Name : " + this.lastname + "\n\t Type of Account : " + this.getAccountType() + "\n\t Username : " + this.username;
     }
 
 }
