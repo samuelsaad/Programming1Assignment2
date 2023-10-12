@@ -91,20 +91,7 @@ public class PostController {
     }
     public String getPostFormattedDetails(Post post) {
 
-        return String.format(
-                "Post ID: %d%n" +
-                        "Author: %s%n" +
-                        "Content: %s%n" +
-                        "Number of Likes: %d%n" +
-                        "Shares: %d%n" +
-                        "Date: %s%n",
-                post.getID(),
-                post.getAuthor(),
-                post.getContent(),
-                post.getLikes(),
-                post.getShares(),
-                post.getDate()
-        );
+        return post.getDetails();
     }
 
 

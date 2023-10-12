@@ -3,7 +3,7 @@ package com.example.assignment2.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Post {
+public class Post implements DetailPrintable{
     private final int ID;
     private final String content;
     private final String author;
@@ -51,5 +51,24 @@ public class Post {
         String formattedDateTime = DATE_FORMATTER.format(date);
 
         return ID + "," + content + "," + author + "," + numOfLikes + "," + shares + "," + formattedDateTime + "\n";
+    }
+
+
+    @Override
+    public String getDetails() {
+        return String.format(
+                "Post ID: %d%n" +
+                        "Author: %s%n" +
+                        "Content: %s%n" +
+                        "Number of Likes: %d%n" +
+                        "Shares: %d%n" +
+                        "Date: %s%n",
+                this.ID,
+                this.author,
+                this.content,
+                this.numOfLikes,
+                this.shares,
+                this.date
+        );
     }
 }

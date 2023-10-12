@@ -16,7 +16,6 @@ public class PremiumAccount extends Account implements DetailPrintable {
     // the user is asked to sign in and the program must match the codes. The key is an object member variable due to it
     // being assigned by the user as the most frequent character or String in their passcode. It may be replaced with
     // replaceChar or replaceString but key is simply more precise.
-    private String key;
 
     // Here is the String that will be used to encrypt all the passcodes of the object
     // it may be replaced with "replacement", however this would be too generic as to what it does.
@@ -28,16 +27,12 @@ public class PremiumAccount extends Account implements DetailPrintable {
     }
 
     public void encryptPassword() {
-        super.password = super.password.replaceAll(this.key, PremiumAccount.passwordReplacement);
+        super.password = super.password.replaceAll(PremiumAccount.passwordReplacement, this.password);
     }
 
     @Override
     String getAccountType() {
         return "premium";
-    }
-
-    String getKey() {
-        return this.key;
     }
 
     @Override
@@ -51,7 +46,7 @@ public class PremiumAccount extends Account implements DetailPrintable {
     }
 
     public String getUnencryptedPassword() {
-        return this.password.replaceAll(PremiumAccount.passwordReplacement, this.key);
+        return this.password.replaceAll(this.password, PremiumAccount.passwordReplacement);
     }
 
 }
