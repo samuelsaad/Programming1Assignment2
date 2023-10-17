@@ -103,7 +103,7 @@ public class AccountManager {
         // Successful login, return the account
         return foundAccount;
     }
-    public Account signup(String firstname, String lastname, String username, String password) throws AccountException {
+    public Account signup(String firstname, String lastname, String username, String enteredPassword) throws AccountException {
         // Check if the username already exists
         for (int i = 0; i < AccountManager.arrayCount; i++) {
             if (accounts[i] != null && accounts[i].getUsername().equals(username)) {
@@ -112,25 +112,13 @@ public class AccountManager {
         }
 
         // Ensure that all fields are not empty
-        if (firstname.isEmpty() || lastname.isEmpty() || username.isEmpty() || password.isEmpty()) {
+        if (firstname.isEmpty() || lastname.isEmpty() || username.isEmpty() || enteredPassword.isEmpty()) {
             throw new AccountException("All fields (firstname, lastname, username, and password) are required.");
         }
 
-        // Prompt the user to confirm the password
-        Console console = System.console();
-        if (console == null) {
-            throw new AccountException("Cannot read the password securely.");
-        }
 
-        char[] passwordChars = console.readPassword("Enter your password: ");
-        char[] confirmPasswordChars = console.readPassword("Confirm your password: ");
 
-        String enteredPassword = new String(passwordChars);
-        String confirmedPassword = new String(confirmPasswordChars);
 
-        if (!enteredPassword.equals(confirmedPassword)) {
-            throw new AccountException("Passwords do not match. Please try again.");
-        }
 
         // Create a new default account
         DefaultAccount newAccount = new DefaultAccount(username, enteredPassword, firstname, lastname, 0); // Initialize with 0 posts

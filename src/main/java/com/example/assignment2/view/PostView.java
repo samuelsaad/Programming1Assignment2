@@ -9,12 +9,12 @@ import com.example.assignment2.controller.PostController;
 import com.example.assignment2.model.*;
 
 public class PostView {
-    private AccountManager accountManager;
+    public AccountManager accountManager;
     private final PostController postController;
     public Account account;
     public PostView() {
         this.postController = new PostController();
-        AccountManager accountManager;
+        accountManager = new AccountManager();
         Account account  = null;
 
     }
@@ -51,7 +51,7 @@ public class PostView {
     public void getMenuOption() {
         readFileAndCreatePosts();
         try {
-            accountManager.readAccountsFromFile("Accounts.csv");
+            accountManager.readAccountsFromFile("AccountInfo.csv");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -59,11 +59,21 @@ public class PostView {
 
         while (this.account == null){
             signupOption = getValidStringInput("Would you like to signup or login? please write S or L");
-            if (signupOption == "yes"){
+            if (signupOption.equalsIgnoreCase("S")){
                 String username = getValidStringInput("Please enter a username: ");
-                String password = getValidStringInput("Please enter a password: ");
                 String firstname = getValidStringInput("Please enter a FirstName: ");
                 String lastname = getValidStringInput("Please enter a LastName: ");
+                String password = null;
+                boolean passwordsMatch = false;
+                while (!passwordsMatch){
+                    password = getValidStringInput("Please enter a password you would like to use: ");
+                    String confirmPassword = getValidStringInput("Confirm your password: ");
+
+                if (password.equals(confirmPassword)) {
+                    passwordsMatch = true;
+                }
+                }
+
                 boolean signupSuccess = false;
                 while (!signupSuccess){
                     try {
@@ -171,12 +181,8 @@ public class PostView {
 
                 }
                 this.postController.updateCSVFile();
-
             }
-
-
         }
-
     }
 
     public void printAllPosts() {
